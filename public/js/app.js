@@ -1,4 +1,5 @@
-import { describe, icon } from './weather-codes.js';
+import { describe, icon, intensity, kind } from './weather-codes.js';
+import { SkyVisualizer } from './visualizer.js';
 
 const FORECAST_URL = 'https://api.open-meteo.com/v1/forecast';
 const GEOCODE_URL = 'https://geocoding-api.open-meteo.com/v1/search';
@@ -24,7 +25,29 @@ const state = {
   location: DEFAULT_LOCATION,
   units: 'imperial',
   requestId: 0,
+  liveScene: null,
+  preview: '',
 };
+
+// Scenes for the "Sky visualizer" preview menu.
+const PREVIEW_SCENES = {
+  'clear-day': { kind: 'clear', isDay: true, intensity: 0, wind: 0.1, cloudCover: 0 },
+  'clear-night': { kind: 'clear', isDay: false, intensity: 0, wind: 0.1, cloudCover: 0 },
+  partly: { kind: 'partly', isDay: true, intensity: 0, wind: 0.25, cloudCover: 45 },
+  cloudy: { kind: 'cloudy', isDay: true, intensity: 0, wind: 0.3, cloudCover: 100 },
+  fog: { kind: 'fog', isDay: true, intensity: 0, wind: 0.1, cloudCover: 100 },
+  drizzle: { kind: 'drizzle', isDay: true, intensity: 0.6, wind: 0.2, cloudCover: 100 },
+  rain: { kind: 'rain', isDay: true, intensity: 0.8, wind: 0.35, cloudCover: 100 },
+  thunder: { kind: 'thunder', isDay: true, intensity: 1, wind: 0.6, cloudCover: 100 },
+  sleet: { kind: 'sleet', isDay: true, intensity: 0.7, wind: 0.3, cloudCover: 100 },
+  snow: { kind: 'snow', isDay: true, intensity: 0.8, wind: 0.2, cloudCover: 100 },
+};
+
+const sky = new SkyVisualizer($('sky'));
+
+function applyScene() {
+  sky.set(PREVIEW_SCENES[state.preview] || state.liveScene);
+}
 
 // ---------- Persistence (best effort; storage may be unavailable) ----------
 function loadPrefs() {
@@ -182,6 +205,16 @@ function render(data, units) {
   const isDay = current.is_day === 1;
 
   document.body.dataset.daypart = isDay ? 'day' : 'night';
+
+  const windKmh = units === 'imperial' ? current.wind_speed_10m * 1.609 : current.wind_speed_10m;
+  state.liveScene = {
+    kind: kind(current.weather_code),
+    isDay,
+    intensity: intensity(current.weather_code),
+    wind: Math.min(Math.max((windKmh || 0) / 60, 0), 1),
+    cloudCover: current.cloud_cover,
+  };
+  applyScene();
 
   // Hero
   $('current-icon').innerHTML = icon(current.weather_code, isDay);
@@ -386,6 +419,11 @@ function setupSearch() {
 
 // ---------- Controls ----------
 function setupControls() {
+  $('scene-select').addEventListener('change', (e) => {
+    state.preview = e.target.value;
+    applyScene();
+  });
+
   const unitButtons = document.querySelectorAll('.unit-toggle button');
   const syncUnits = () => unitButtons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.units === state.units)));
   syncUnits();

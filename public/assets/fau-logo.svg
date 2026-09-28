@@ -1,22 +1,35 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="t">
-  <title id="t">FAU Owls</title>
-  <!-- Owl head with ear tufts -->
-  <path d="M14 14 L42 36 Q60 29 78 36 L106 14 L99 62 Q96 102 60 110 Q24 102 21 62 Z"
+  <title id="t">FAU Owl</title>
+  <!-- Branch -->
+  <path d="M8 106 Q60 98 112 104" fill="none" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round"/>
+  <path d="M8 106 Q60 98 112 104" fill="none" stroke="#CC0000" stroke-width="5" stroke-linecap="round"/>
+  <!-- Body with ear tufts -->
+  <path d="M30 6 L45 25 Q60 20 75 25 L90 6 Q101 26 98 46 Q104 76 88 96 Q76 106 60 106 Q44 106 32 96 Q16 76 22 46 Q19 26 30 6 Z"
         fill="#003366" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round"/>
-  <!-- Facial disc -->
-  <circle cx="42" cy="64" r="19" fill="#FFFFFF"/>
-  <circle cx="78" cy="64" r="19" fill="#FFFFFF"/>
-  <circle cx="42" cy="64" r="19" fill="none" stroke="#CC0000" stroke-width="3"/>
-  <circle cx="78" cy="64" r="19" fill="none" stroke="#CC0000" stroke-width="3"/>
+  <!-- Wings -->
+  <path d="M26 54 Q17 76 33 96 Q41 80 39 60 Q33 53 26 54 Z" fill="#001f40"/>
+  <path d="M94 54 Q103 76 87 96 Q79 80 81 60 Q87 53 94 54 Z" fill="#001f40"/>
+  <!-- Belly with feather marks -->
+  <ellipse cx="60" cy="80" rx="20" ry="21" fill="#1d5c99"/>
+  <g fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" opacity="0.85">
+    <path d="M50 70 q3 4 6 0 M64 70 q3 4 6 0"/>
+    <path d="M45 80 q3 4 6 0 M57 80 q3 4 6 0 M69 80 q3 4 6 0"/>
+    <path d="M51 90 q3 4 6 0 M63 90 q3 4 6 0"/>
+  </g>
   <!-- Eyes -->
-  <circle cx="44" cy="65" r="9" fill="#003366"/>
-  <circle cx="76" cy="65" r="9" fill="#003366"/>
-  <circle cx="47" cy="62" r="3" fill="#FFFFFF"/>
-  <circle cx="79" cy="62" r="3" fill="#FFFFFF"/>
-  <!-- Brow -->
-  <path d="M22 44 L60 56 L98 44" fill="none" stroke="#CC0000" stroke-width="7"
-        stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="45" cy="44" r="15" fill="#FFFFFF" stroke="#CC0000" stroke-width="3.5"/>
+  <circle cx="75" cy="44" r="15" fill="#FFFFFF" stroke="#CC0000" stroke-width="3.5"/>
+  <circle cx="46" cy="45" r="7.5" fill="#003366"/>
+  <circle cx="74" cy="45" r="7.5" fill="#003366"/>
+  <circle cx="48.5" cy="42.5" r="2.6" fill="#FFFFFF"/>
+  <circle cx="76.5" cy="42.5" r="2.6" fill="#FFFFFF"/>
+  <!-- Brows -->
+  <path d="M28 29 L60 38 L92 29" fill="none" stroke="#CC0000" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
   <!-- Beak -->
-  <path d="M60 72 L52 84 L60 98 L68 84 Z" fill="#CC0000" stroke="#FFFFFF" stroke-width="2.5"
-        stroke-linejoin="round"/>
+  <path d="M60 52 L54 59 L60 67 L66 59 Z" fill="#FDB813" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Talons -->
+  <g fill="#FDB813" stroke="#FFFFFF" stroke-width="1.5">
+    <path d="M46 100 l-4 7 h5 l2 -6 l2 6 h5 l-4 -7 Z"/>
+    <path d="M68 100 l-4 7 h5 l2 -6 l2 6 h5 l-4 -7 Z"/>
+  </g>
 </svg>

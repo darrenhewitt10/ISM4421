@@ -4,6 +4,7 @@ A weather app branded for Florida Atlantic University. It opens on **FAU's Boca 
 
 ## Features
 
+- **Animated sky visualizer** behind the main card that matches the live weather: falling rain with splashes, drizzle, thunderstorms with lightning, snow, sleet, drifting fog, moving clouds, a glowing sun by day, and a moon and twinkling stars at night. A picker lets you preview every effect. It pauses when off-screen and shows a still frame for users who prefer reduced motion.
 - Current conditions: temperature, feels-like, humidity, wind and gusts, UV, cloud cover, pressure, sunrise and sunset
 - A short plain-English summary ("Rain is likely today… grab an umbrella")
 - Hourly forecast for the next 24 hours and a 7-day forecast with temperature range bars
@@ -11,7 +12,7 @@ A weather app branded for Florida Atlantic University. It opens on **FAU's Boca 
 - "My location" (browser geolocation) and a one-click **FAU Boca** reset
 - °F / °C toggle; your last location and units are remembered
 - Refreshes every 15 minutes; responsive with light and dark mode
-- FAU brand colors (FAU Blue `#003366`, FAU Red `#CC0000`) and an owl logo
+- FAU brand colors (FAU Blue `#003366`, FAU Red `#CC0000`) and an owl mascot logo
 
 ## Project structure
 
@@ -22,7 +23,8 @@ public/
   404.html            Not-found page
   css/styles.css      FAU-themed styles
   js/app.js           App logic (fetching, rendering, search, preferences)
-  js/weather-codes.js WMO weather codes → descriptions and SVG icons
+  js/weather-codes.js WMO weather codes → descriptions, SVG icons, intensity
+  js/visualizer.js    Canvas animation for the sky visualizer
   assets/fau-logo.svg Logo shown in the header
   favicon.svg, manifest.webmanifest
 ```
@@ -56,7 +58,7 @@ netlify deploy --prod --dir=public
 
 ## Logo
 
-`public/assets/fau-logo.svg` is an owl mark drawn in FAU colors. To use FAU's official logo, save it over that file with the same name (SVG), or change the `src` in `index.html`. The FAU name and marks are trademarks of Florida Atlantic University. See FAU's brand guidelines for usage rules.
+`public/assets/fau-logo.svg` is an owl mascot drawn in FAU colors (also used as `favicon.svg`). To use FAU's official logo, save it over that file with the same name (SVG), or change the `src` in `index.html`. The FAU name and marks are trademarks of Florida Atlantic University. See FAU's brand guidelines for usage rules.
 
 ## Credits
 

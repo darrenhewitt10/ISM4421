@@ -103,3 +103,16 @@ export function icon(code, isDay = true) {
   }
   return `<svg class="wx-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">${body}</svg>`;
 }
+
+// Rough precipitation intensity (0-1) for the sky visualizer.
+const INTENSITY = {
+  51: 0.4, 53: 0.7, 55: 1, 56: 0.5, 57: 0.9,
+  61: 0.4, 63: 0.7, 65: 1, 66: 0.5, 67: 0.9,
+  71: 0.4, 73: 0.7, 75: 1, 77: 0.4,
+  80: 0.5, 81: 0.75, 82: 1, 85: 0.5, 86: 0.9,
+  95: 0.8, 96: 0.9, 99: 1,
+};
+
+export function intensity(code) {
+  return INTENSITY[code] ?? 0.6;
+}

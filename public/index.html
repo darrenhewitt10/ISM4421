@@ -59,6 +59,8 @@
 
     <div id="weather" class="weather" aria-busy="true">
       <section class="card hero" aria-labelledby="loc-name">
+        <canvas id="sky" class="sky" aria-hidden="true"></canvas>
+        <div class="hero-content">
         <div class="hero-top">
           <div>
             <h1 id="loc-name" class="loc-name">FAU – Boca Raton</h1>
@@ -75,6 +77,23 @@
           </div>
         </div>
         <p id="summary" class="summary"></p>
+        <div class="scene-picker">
+          <label for="scene-select">Sky visualizer</label>
+          <select id="scene-select">
+            <option value="">Live weather</option>
+            <option value="clear-day">☀️ Sunny</option>
+            <option value="clear-night">🌙 Clear night</option>
+            <option value="partly">⛅ Partly cloudy</option>
+            <option value="cloudy">☁️ Overcast</option>
+            <option value="fog">🌫️ Fog</option>
+            <option value="drizzle">🌦️ Drizzle</option>
+            <option value="rain">🌧️ Rain</option>
+            <option value="thunder">⛈️ Thunderstorm</option>
+            <option value="sleet">🌨️ Sleet</option>
+            <option value="snow">❄️ Snow</option>
+          </select>
+        </div>
+        </div>
       </section>
 
       <section class="card" aria-labelledby="details-title">
