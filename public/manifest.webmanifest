@@ -1,0 +1,12 @@
+{
+  "name": "FAU Owl Weather",
+  "short_name": "Owl Weather",
+  "description": "Weather forecasts for FAU Owls, powered by Open-Meteo.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#003366",
+  "theme_color": "#003366",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

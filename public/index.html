@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FAU Owl Weather</title>
+  <meta name="description" content="Current conditions, hourly and 7-day forecasts for FAU Boca Raton and anywhere else, powered by Open-Meteo.">
+  <meta name="theme-color" content="#003366">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
+  <link rel="preconnect" href="https://api.open-meteo.com">
+  <link rel="stylesheet" href="/css/styles.css">
+  <script type="module" src="/js/app.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/" aria-label="FAU Owl Weather home">
+        <img class="brand-logo" src="/assets/fau-logo.svg" alt="FAU Owls logo" width="52" height="52">
+        <span class="brand-text">
+          <span class="brand-fau">FAU</span>
+          <span class="brand-name">Owl Weather</span>
+        </span>
+      </a>
+
+      <div class="unit-toggle" role="group" aria-label="Temperature units">
+        <button type="button" data-units="imperial" aria-pressed="true">°F</button>
+        <button type="button" data-units="metric" aria-pressed="false">°C</button>
+      </div>
+    </div>
+    <div class="header-stripe" aria-hidden="true"></div>
+  </header>
+
+  <main class="container">
+    <section class="search-bar" aria-label="Find a location">
+      <form id="search-form" class="search" role="search" autocomplete="off">
+        <label for="search-input" class="visually-hidden">Search for a city</label>
+        <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <input id="search-input" type="search" placeholder="Search a city, e.g. Jupiter, FL"
+               role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="search-results">
+        <ul id="search-results" class="search-results" role="listbox" hidden></ul>
+      </form>
+      <div class="search-actions">
+        <button type="button" id="locate-btn" class="btn btn-outline" title="Use my current location">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          <span>My location</span>
+        </button>
+        <button type="button" id="home-btn" class="btn btn-primary" title="Back to FAU Boca Raton">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" fill="currentColor"/></svg>
+          <span>FAU Boca</span>
+        </button>
+      </div>
+    </section>
+
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+
+    <div id="weather" class="weather" aria-busy="true">
+      <section class="card hero" aria-labelledby="loc-name">
+        <div class="hero-top">
+          <div>
+            <h1 id="loc-name" class="loc-name">FAU – Boca Raton</h1>
+            <p id="loc-region" class="loc-region">Florida, United States</p>
+          </div>
+          <p id="updated" class="updated"></p>
+        </div>
+        <div class="hero-main">
+          <div id="current-icon" class="current-icon" aria-hidden="true"></div>
+          <div>
+            <p class="current-temp"><span id="current-temp">--</span><span class="deg" id="current-unit">°F</span></p>
+            <p id="current-desc" class="current-desc">Loading…</p>
+            <p id="current-range" class="current-range"></p>
+          </div>
+        </div>
+        <p id="summary" class="summary"></p>
+      </section>
+
+      <section class="card" aria-labelledby="details-title">
+        <h2 id="details-title" class="card-title">Right now</h2>
+        <dl id="details" class="details"></dl>
+      </section>
+
+      <section class="card" aria-labelledby="hourly-title">
+        <h2 id="hourly-title" class="card-title">Next 24 hours</h2>
+        <ol id="hourly" class="hourly" tabindex="0" aria-label="Hourly forecast, scrollable"></ol>
+      </section>
+
+      <section class="card" aria-labelledby="daily-title">
+        <h2 id="daily-title" class="card-title">7-day forecast</h2>
+        <ol id="daily" class="daily"></ol>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Go Owls! 🦉 Built for ISM 4421 at Florida Atlantic University.</p>
+      <p>Weather data by <a href="https://open-meteo.com/" rel="noopener" target="_blank">Open-Meteo.com</a> (CC BY 4.0).</p>
+    </div>
+  </footer>
+</body>
+</html>

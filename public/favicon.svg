@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-labelledby="t">
+  <title id="t">FAU Owls</title>
+  <!-- Owl head with ear tufts -->
+  <path d="M14 14 L42 36 Q60 29 78 36 L106 14 L99 62 Q96 102 60 110 Q24 102 21 62 Z"
+        fill="#003366" stroke="#FFFFFF" stroke-width="4" stroke-linejoin="round"/>
+  <!-- Facial disc -->
+  <circle cx="42" cy="64" r="19" fill="#FFFFFF"/>
+  <circle cx="78" cy="64" r="19" fill="#FFFFFF"/>
+  <circle cx="42" cy="64" r="19" fill="none" stroke="#CC0000" stroke-width="3"/>
+  <circle cx="78" cy="64" r="19" fill="none" stroke="#CC0000" stroke-width="3"/>
+  <!-- Eyes -->
+  <circle cx="44" cy="65" r="9" fill="#003366"/>
+  <circle cx="76" cy="65" r="9" fill="#003366"/>
+  <circle cx="47" cy="62" r="3" fill="#FFFFFF"/>
+  <circle cx="79" cy="62" r="3" fill="#FFFFFF"/>
+  <!-- Brow -->
+  <path d="M22 44 L60 56 L98 44" fill="none" stroke="#CC0000" stroke-width="7"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Beak -->
+  <path d="M60 72 L52 84 L60 98 L68 84 Z" fill="#CC0000" stroke="#FFFFFF" stroke-width="2.5"
+        stroke-linejoin="round"/>
+</svg>
