@@ -58,6 +58,8 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+[hidden] { display: none !important; }
+
 html { -webkit-text-size-adjust: 100%; }
 
 body {
@@ -525,3 +527,138 @@ body[data-daypart="night"] .hero {
 /* ---------- 404 ---------- */
 .notfound { margin: 32px 0; text-align: center; }
 .notfound .btn { text-decoration: none; }
+
+/* ---------- Sign in ---------- */
+.header-actions { display: flex; align-items: center; gap: 10px; flex: none; }
+.btn-signin {
+  min-height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: var(--fau-red);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+.btn-signin:hover { background: var(--fau-red-600); }
+.btn-signin svg { width: 16px; height: 16px; }
+
+.account { position: relative; }
+.account-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 3px 12px 3px 3px;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 999px;
+  background: transparent;
+  color: #fff;
+  font: 600 0.9rem var(--font);
+  cursor: pointer;
+}
+.account-btn:hover { background: rgba(255, 255, 255, 0.1); }
+.avatar {
+  width: 28px;
+  height: 28px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--fau-red);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+.account-name { max-width: 9em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.account-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  z-index: 20;
+  width: 240px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+.account-menu p { margin: 0; overflow-wrap: anywhere; }
+.account-full-name { font-weight: 700; }
+.account-email { font-size: 0.85rem; color: var(--muted); }
+.account-provider { margin-top: 6px !important; font-size: 0.75rem; color: var(--muted); }
+.account-menu .btn { width: 100%; margin-top: 12px; min-height: 40px; }
+
+.signin-dialog {
+  width: min(400px, calc(100vw - 32px));
+  padding: 28px 24px 20px;
+  border: 0;
+  border-top: 6px solid var(--fau-red);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 20px 60px rgba(0, 20, 50, 0.35);
+  text-align: center;
+}
+.signin-dialog::backdrop { background: rgba(0, 25, 51, 0.6); backdrop-filter: blur(3px); }
+.signin-dialog h2 { margin: 8px 0 4px; font-size: 1.3rem; color: var(--text); }
+.signin-logo { width: 72px; height: 72px; }
+.signin-sub { margin: 0 0 18px; color: var(--muted); }
+.dialog-close {
+  position: absolute;
+  top: 12px; right: 12px;
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  border: 0; border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+.dialog-close:hover { background: color-mix(in srgb, var(--muted) 15%, transparent); }
+.dialog-close svg { width: 20px; height: 20px; }
+.provider-list { display: grid; gap: 10px; }
+.provider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font: 600 1rem var(--font);
+  cursor: pointer;
+  transition: filter 0.15s, border-color 0.15s;
+}
+.provider svg { width: 22px; height: 22px; flex: none; }
+.provider small { font-weight: 500; opacity: 0.75; }
+.provider:hover:not(:disabled) { filter: brightness(0.96); border-color: var(--fau-blue-400); }
+.provider:disabled { opacity: 0.5; cursor: not-allowed; }
+.provider-google { background: #fff; color: #1f1f1f; border-color: #dadce0; }
+.provider-apple { background: #000; color: #fff; border-color: #000; }
+.provider-yahoo { background: #6001d2; color: #fff; border-color: #6001d2; }
+.provider-yahoo svg rect { fill: #fff; }
+.provider-yahoo svg path { fill: #6001d2; }
+.signin-error {
+  margin: 14px 0 0;
+  padding: 10px 12px;
+  border-left: 4px solid var(--fau-red);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--fau-red) 10%, var(--surface));
+  font-size: 0.9rem;
+  text-align: left;
+}
+.signin-fine { margin: 14px 0 0; font-size: 0.75rem; color: var(--muted); }
+
+@media (max-width: 600px) {
+  .header-actions { gap: 8px; }
+  .unit-toggle button { padding: 6px 10px; }
+  .btn-signin { padding: 0 10px; }
+  .btn-signin-label { display: none; }
+  .account-name { display: none; }
+  .account-btn { padding: 3px; }
+}
+@media (max-width: 360px) {
+  .brand-name { display: none; }
+}

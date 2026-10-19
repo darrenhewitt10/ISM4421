@@ -1,5 +1,6 @@
 import { describe, icon, intensity, kind } from './weather-codes.js';
 import { SkyVisualizer } from './visualizer.js';
+import { initAuth } from './auth.js';
 
 const FORECAST_URL = 'https://api.open-meteo.com/v1/forecast';
 const GEOCODE_URL = 'https://geocoding-api.open-meteo.com/v1/search';
@@ -477,6 +478,7 @@ loadPrefs();
 setupControls();
 setupSearch();
 loadWeather();
+initAuth().catch((err) => console.error('Sign-in setup failed', err));
 
 // Refresh every 15 minutes while the tab is open and visible.
 setInterval(() => { if (document.visibilityState === 'visible') loadWeather(); }, 15 * 60 * 1000);
