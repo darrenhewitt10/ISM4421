@@ -71,8 +71,10 @@ https://<ref>.supabase.co/auth/v1/callback
 ```
 
 ### 1. Connect the app to Supabase
-1. Create a Supabase project (the free plan is fine).
-2. In **Project Settings → API**, copy the **Project URL** and the **publishable key** (`sb_publishable_…`) into `public/js/config.js`. Both are safe to make public. Never put the secret or `service_role` key in this app.
+The app is already connected to the Supabase project **fau-owl-weather** (`zneotlgffuedbiqstzcw`, us-east-1). Its Project URL and publishable key are in `public/js/config.js`. Both are safe to make public. Never put the secret or `service_role` key in this app.
+
+1. Open the project at <https://supabase.com/dashboard/project/zneotlgffuedbiqstzcw>.
+2. The callback URL for every provider below is `https://zneotlgffuedbiqstzcw.supabase.co/auth/v1/callback`.
 3. In **Authentication → URL Configuration**:
    - set **Site URL** to `https://<site>`
    - add these **Redirect URLs**: `https://<site>/**` and `http://localhost:8080/**` (for local testing)
@@ -99,7 +101,7 @@ Supabase doesn't have Yahoo built in, so it's added as a custom OpenID Connect p
    - Scopes: `openid profile email`
 
 ### Security notes
-- `netlify.toml`'s Content-Security-Policy allows connections to `*.supabase.co`. For a tighter policy, replace that with your own `https://<ref>.supabase.co`.
+- `netlify.toml`'s Content-Security-Policy only allows connections to this app's Supabase project. If you switch projects, update the URL there as well as in `config.js`.
 - Sign-in uses the PKCE flow. Sessions are stored in the browser and refreshed automatically.
 
 ## Logo

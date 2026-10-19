@@ -3,8 +3,8 @@
 // controlled by Supabase Auth and Row Level Security, not by hiding these.
 // Find them in the Supabase dashboard: Project Settings → API.
 // Leave them empty to run the app without the sign-in feature.
-export const SUPABASE_URL = '';
-export const SUPABASE_PUBLISHABLE_KEY = '';
+export const SUPABASE_URL = 'https://zneotlgffuedbiqstzcw.supabase.co';
+export const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_jvwaDgNHb8fEKpl8uGIRxg_ezdcXyGk';
 
 // Supabase provider IDs. Google and Apple are built in; Yahoo is added in
 // Supabase as a custom OIDC provider and must use this identifier.
