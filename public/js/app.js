@@ -3,6 +3,7 @@ import { SkyVisualizer } from './visualizer.js';
 import { initAuth } from './auth.js';
 import { initRadar, setRadarLocation } from './radar.js';
 import { initSurf, setSurfUnits } from './surf.js';
+import { initLightning, setLightningLocation } from './lightning.js';
 
 const FORECAST_URL = 'https://api.open-meteo.com/v1/forecast';
 const GEOCODE_URL = 'https://geocoding-api.open-meteo.com/v1/search';
@@ -186,6 +187,7 @@ async function loadWeather() {
     if (id !== state.requestId) return; // a newer request superseded this one
     render(data, units);
     setRadarLocation(location, data.timezone);
+    setLightningLocation(location);
     setStatus('');
   } catch (err) {
     if (id !== state.requestId) return;
@@ -484,6 +486,7 @@ setupSearch();
 loadWeather();
 initAuth().catch((err) => console.error('Sign-in setup failed', err));
 initRadar(state.location);
+initLightning(state.location);
 initSurf(state.units);
 
 // Refresh every 15 minutes while the tab is open and visible.

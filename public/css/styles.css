@@ -930,3 +930,83 @@ html { scroll-behavior: smooth; scroll-padding-top: 12px; }
 :root[data-theme="dark"] .cam-open { color: #8cc4ff; }
 @media (prefers-reduced-motion: reduce) { .cam-dot { animation: none; } html { scroll-behavior: auto; } }
 .cam-live.cam-still { color: var(--muted); }
+
+/* Lightning tracker */
+.lightning-layout { display: grid; gap: 16px; grid-template-columns: 1fr; }
+@media (min-width: 900px) { .lightning-layout { grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr); } }
+.lightning-map-wrap { position: relative; }
+.lightning-map {
+  height: clamp(340px, 60vh, 560px);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0e1116;
+  border: 1px solid var(--border);
+}
+.lightning-map.leaflet-container { font-family: var(--font); background: #0e1116; }
+.lightning-replay-time {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  z-index: 800;
+  transform: translateX(-50%);
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+.range-ring { stroke: rgba(255, 255, 255, 0.4); stroke-width: 1; stroke-dasharray: 4 5; }
+.range-ring.is-outer { stroke: rgba(255, 255, 255, 0.6); stroke-dasharray: none; }
+.range-ring.is-danger { stroke: rgba(255, 90, 90, 0.85); stroke-dasharray: none; stroke-width: 1.5; }
+.ring-label span {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #e8eef6;
+  font: 600 10px var(--font);
+  white-space: nowrap;
+}
+.lightning-panel { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.lightning-status {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--muted) 8%, var(--surface));
+}
+.lightning-status-icon {
+  width: 40px;
+  height: 40px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--muted);
+  color: #fff;
+}
+.lightning-status-icon svg { width: 22px; height: 22px; }
+.lightning-status-title { margin: 0; font-weight: 800; line-height: 1.3; }
+.lightning-status-text { margin: 4px 0 0; font-size: 0.85rem; color: var(--muted); }
+.lightning-status-text:empty { display: none; }
+.lightning-status[data-level="danger"] { border-color: var(--fau-red); background: color-mix(in srgb, var(--fau-red) 12%, var(--surface)); }
+.lightning-status[data-level="danger"] .lightning-status-icon { background: var(--fau-red); animation: cam-pulse 1.2s ease-in-out infinite; }
+.lightning-status[data-level="warning"] { border-color: #f08c00; background: color-mix(in srgb, #f08c00 12%, var(--surface)); }
+.lightning-status[data-level="warning"] .lightning-status-icon { background: #e07b00; }
+.lightning-status[data-level="watch"] .lightning-status-icon { background: #c9a400; }
+.lightning-status[data-level="clear"] .lightning-status-icon { background: #2f9e6f; }
+.lightning-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.lightning-legend-title { margin: 0 0 6px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.lightning-legend ul { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 0; padding: 0; list-style: none; font-size: 0.8rem; }
+.lightning-legend li { display: inline-flex; align-items: center; gap: 6px; }
+.age-swatch { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0, 0, 0, 0.5); }
+.age-0 { background: #ffffff; box-shadow: 0 0 6px #ffe14d; }
+.age-1 { background: #ffe14d; }
+.age-2 { background: #ff9f1c; }
+.age-3 { background: #e63946; }
+#lightning-replay svg { width: 16px; height: 16px; }
+@media (prefers-reduced-motion: reduce) { .lightning-status .lightning-status-icon { animation: none !important; } }

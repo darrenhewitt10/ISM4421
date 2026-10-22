@@ -1,8 +1,13 @@
 # Netlify configuration for FAU Owl Weather.
-# Static site: no build step, Netlify serves the "public" folder as-is.
+# Static site in "public" (no build step) plus one serverless function.
 
 [build]
   publish = "public"
+
+# Serverless function for the lightning tracker (netlify/functions/lightning.mjs).
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
 
 [[headers]]
   for = "/*"

@@ -30,7 +30,7 @@ function loadAsset(tag, attrs) {
 }
 
 let leafletPromise;
-function loadLeaflet() {
+export function loadLeaflet() {
   if (window.L) return Promise.resolve(window.L);
   leafletPromise ||= Promise.all([
     loadAsset('link', { rel: 'stylesheet', href: '/vendor/leaflet-1.9.4/leaflet.css' }),

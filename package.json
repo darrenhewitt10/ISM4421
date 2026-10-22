@@ -1,0 +1,15 @@
+{
+  "name": "fau-owl-weather",
+  "private": true,
+  "type": "module",
+  "description": "FAU Owl Weather: static site in public/ plus a Netlify Function for lightning data.",
+  "scripts": {
+    "dev": "netlify dev"
+  },
+  "dependencies": {
+    "jsfive": "0.4.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

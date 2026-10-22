@@ -6,6 +6,7 @@ A weather app branded for Florida Atlantic University. It opens on **FAU's Boca 
 
 - **Animated sky visualizer** behind the main card that matches the live weather: falling rain with splashes, drizzle, thunderstorms with lightning, snow, sleet, drifting fog, moving clouds, a glowing sun by day, and a moon and twinkling stars at night. A picker lets you preview every effect. It pauses when off-screen and shows a still frame for users who prefer reduced motion.
 - **12-hour HD radar:** an animated loop of the NEXRAD high-resolution reflectivity mosaic, one frame every 15 minutes, on a dark map. It has play/pause, step and scrub controls and a legend. It follows the searched city and only loads when you scroll to it.
+- **Lightning tracker** (modeled on WeatherBug's Spark): every lightning flash from the last 30 minutes within 200 miles, plotted from NOAA's GOES-19 satellite and refreshed every minute. Strikes are colored by age, with fresh ones drawn as glowing bolts. The map has 10/30/100/200-mile range rings, a nearest-strike safety status ("Lightning within 10 miles: get indoors now"), strike counts by distance and time, and a 30-minute replay.
 - **Surf report** for 9 South Florida spots, defaulting to Boca Raton Inlet. It shows estimated surf size and a rating (Flat to Epic), swell, wind (onshore or offshore for that beach), water temperature, next high and low tide, a 48-hour wave chart and a tide curve (both with hover tooltips and a table view), the best surf window today, and live NWS alerts such as rip current statements.
 - **Local beach cams:** links to free public cams from Palm Beach County, the cities of Boca Raton, Deerfield Beach and Pompano Beach, EarthCam, WPTV, Loggerhead Marinelife Center and the Town of Jupiter, nearest to FAU first.
 - Current conditions: temperature, feels-like, humidity, wind and gusts, UV, cloud cover, pressure, sunrise and sunset
@@ -21,7 +22,10 @@ A weather app branded for Florida Atlantic University. It opens on **FAU's Boca 
 ## Project structure
 
 ```
-netlify.toml          Netlify config (publish dir + security headers)
+netlify.toml          Netlify config (publish dir, functions, security headers)
+package.json          Dependency for the lightning function (jsfive, a pure-JS HDF5 reader)
+netlify/functions/
+  lightning.mjs       /api/lightning: reads NOAA GOES-19 GLM files and returns nearby flashes
 public/
   index.html          App shell
   404.html            Not-found page
@@ -32,23 +36,25 @@ public/
   js/auth.js          Sign in / sign out with Supabase Auth
   js/radar.js         12-hour radar loop (Leaflet + IEM NEXRAD tiles)
   js/surf.js          Surf report, wave/tide charts, NWS beach alerts
+  js/lightning.js     Lightning tracker map, rings, safety status, replay
   js/config.js        Supabase URL + publishable key (fill these in)
   vendor/             Bundled supabase-js 2.118.0 and Leaflet 1.9.4 (both open source), so no CDN is needed
   assets/fau-logo.svg Logo shown in the header
   favicon.svg, manifest.webmanifest
 ```
 
-It's plain HTML, CSS, and JavaScript. There's no build step, and supabase-js is bundled into `vendor/`, so there's nothing to install.
+The site is plain HTML, CSS, and JavaScript with no build step. Supabase-js and Leaflet are bundled into `vendor/`. The one server-side piece is the lightning function, which Netlify builds and deploys automatically.
 
 ## Run locally
 
-Any static file server works, for example:
+To run everything, including the lightning function:
 
 ```bash
-npx serve public
-# or
-python3 -m http.server --directory public 8080
+npm install
+npx netlify-cli dev      # serves public/ and /api/lightning at http://localhost:8888
 ```
+
+A plain static server (`npx serve public`) also works for everything except the lightning tracker, which will say its data isn't available.
 
 ## Deploy to Netlify
 
@@ -57,12 +63,12 @@ python3 -m http.server --directory public 8080
 2. Leave **Build command** empty. `netlify.toml` already sets **Publish directory** to `public`.
 3. Click **Deploy**. Every push to `main` redeploys automatically.
 
-**Option B: Drag and drop.** Drag the `public` folder onto <https://app.netlify.com/drop>.
+**Option B: Drag and drop.** Drag the `public` folder onto <https://app.netlify.com/drop>. Drag-and-drop only uploads static files, so **the lightning tracker won't work** this way. Use Option A or C for that.
 
 **Option C: CLI**
 ```bash
 npm i -g netlify-cli
-netlify deploy --prod --dir=public
+netlify deploy --prod   # reads the publish dir and functions from netlify.toml
 ```
 
 ## Sign-in setup (Supabase)
@@ -118,5 +124,6 @@ Supabase doesn't have Yahoo built in, so it's added as a custom OpenID Connect p
 - **Weather and marine data:** [Open-Meteo.com](https://open-meteo.com/), licensed under CC BY 4.0. Marine tides are model estimates at about 8 km resolution and aren't for navigation.
 - **Radar:** NWS NEXRAD mosaic tiles from the [Iowa Environmental Mesonet](https://mesonet.agron.iastate.edu/ogc/) (`ridge::USCOMP-N0Q-YYYYMMDDHHMI`, archived every 5 minutes, UTC).
 - **Map:** © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors, © [CARTO](https://carto.com/attributions). CARTO's free basemaps are meant for light, non-commercial use, so switch to a paid or self-hosted basemap if the site gets heavy traffic.
+- **Lightning:** NOAA GOES-19 Geostationary Lightning Mapper (GLM) Level 2 data from the public [NOAA Open Data bucket on AWS](https://registry.opendata.aws/noaa-goes/) (public domain). GLM detects total lightning at about 8 km resolution, updated every 20 seconds.
 - **Beach and marine alerts:** [National Weather Service API](https://www.weather.gov/documentation/services-web-api).
 - **Beach cams:** each is owned and run by the provider named on its card. The app only links to them.

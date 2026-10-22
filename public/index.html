@@ -79,6 +79,7 @@
     <nav class="section-nav" aria-label="Page sections">
       <a href="#weather">Forecast</a>
       <a href="#radar">Radar</a>
+      <a href="#lightning">Lightning</a>
       <a href="#surf">Surf report</a>
       <a href="#cams">Beach cams</a>
     </nav>
@@ -170,6 +171,52 @@
         <span class="radar-legend-hail">Hail</span>
       </div>
       <p id="radar-note" class="card-note"></p>
+    </section>
+
+    <section id="lightning" class="card section-card" aria-labelledby="lightning-title">
+      <div class="card-head">
+        <div>
+          <h2 id="lightning-title" class="section-title">Lightning tracker</h2>
+          <p class="card-meta">Every flash in the last 30 minutes within 200 miles &middot; NOAA GOES-19 satellite, refreshed every minute</p>
+        </div>
+        <button type="button" id="lightning-replay" class="btn btn-outline btn-small-outline">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.6M4 4v4h4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Replay 30 min
+        </button>
+      </div>
+      <div class="lightning-layout">
+        <div class="lightning-map-wrap">
+          <div id="lightning-map" class="lightning-map" aria-label="Lightning strike map with 10, 30, 100 and 200 mile range rings"></div>
+          <span id="lightning-replay-time" class="lightning-replay-time" hidden></span>
+        </div>
+        <aside class="lightning-panel" aria-label="Lightning summary">
+          <div id="lightning-status" class="lightning-status" data-level="loading" role="status" aria-live="polite">
+            <span class="lightning-status-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z" fill="currentColor"/></svg>
+            </span>
+            <div>
+              <p id="lightning-status-title" class="lightning-status-title">Checking for lightning…</p>
+              <p id="lightning-status-text" class="lightning-status-text"></p>
+            </div>
+          </div>
+          <dl id="lightning-stats" class="details lightning-stats"></dl>
+          <div class="lightning-legend">
+            <p class="lightning-legend-title">Strike age</p>
+            <ul>
+          <li><span class="age-swatch age-0" aria-hidden="true"></span>0–5 min</li>
+          <li><span class="age-swatch age-1" aria-hidden="true"></span>5–10 min</li>
+          <li><span class="age-swatch age-2" aria-hidden="true"></span>10–20 min</li>
+          <li><span class="age-swatch age-3" aria-hidden="true"></span>20–30 min</li>
+            </ul>
+          </div>
+          <p id="lightning-updated" class="card-note"></p>
+        </aside>
+      </div>
+      <p class="card-note">
+        GOES-19&rsquo;s Geostationary Lightning Mapper detects total lightning (cloud-to-ground and in-cloud) at about
+        8&nbsp;km resolution, so locations are approximate and some flashes are missed. Don&rsquo;t rely on this for
+        life-safety decisions. When thunder roars, go indoors.
+      </p>
     </section>
 
     <section id="surf" class="card section-card" aria-labelledby="surf-title" aria-busy="true">
