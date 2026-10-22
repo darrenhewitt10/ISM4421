@@ -78,8 +78,10 @@
 
     <nav class="section-nav" aria-label="Page sections">
       <a href="#weather">Forecast</a>
+      <a href="#conditions">Air &amp; wind</a>
       <a href="#radar">Radar</a>
       <a href="#lightning">Lightning</a>
+      <a href="#windmap">Wind map</a>
       <a href="#surf">Surf report</a>
       <a href="#cams">Beach cams</a>
     </nav>
@@ -138,6 +140,29 @@
       <section class="card" aria-labelledby="daily-title">
         <h2 id="daily-title" class="card-title">7-day forecast</h2>
         <ol id="daily" class="daily"></ol>
+      </section>
+    </div>
+
+    <div id="conditions" class="conditions">
+      <section id="aq-card" class="card span-2" aria-labelledby="aq-title">
+        <h2 id="aq-title" class="card-title">Air quality</h2>
+        <div id="aq-body"><p class="card-note">Loading air quality…</p></div>
+      </section>
+      <section id="sun-card" class="card" aria-labelledby="sun-title">
+        <h2 id="sun-title" class="card-title">Sunrise &amp; sunset</h2>
+        <div id="sun-body"></div>
+      </section>
+      <section id="wind-card" class="card span-2" aria-labelledby="wind-title">
+        <h2 id="wind-title" class="card-title">Wind</h2>
+        <div id="wind-body"></div>
+      </section>
+      <section id="humidity-card" class="card" aria-labelledby="humidity-title">
+        <h2 id="humidity-title" class="card-title">Humidity</h2>
+        <div id="humidity-body"></div>
+      </section>
+      <section id="precip-card" class="card span-3" aria-labelledby="precip-title">
+        <h2 id="precip-title" class="card-title">Precipitation</h2>
+        <div id="precip-body"></div>
       </section>
     </div>
 
@@ -217,6 +242,37 @@
         8&nbsp;km resolution, so locations are approximate and some flashes are missed. Don&rsquo;t rely on this for
         life-safety decisions. When thunder roars, go indoors.
       </p>
+    </section>
+
+    <section id="windmap" class="card section-card" aria-labelledby="windmap-title">
+      <div class="card-head">
+        <div>
+          <h2 id="windmap-title" class="section-title">Wind map</h2>
+          <p class="card-meta">Live wind flow about 250 miles around you &middot; arrows show direction, numbers are mph</p>
+        </div>
+        <div id="wind-steps" class="seg-control" role="group" aria-label="Forecast time">
+          <button type="button" data-step="0" aria-pressed="true">Now</button>
+          <button type="button" data-step="1" aria-pressed="false">+3h</button>
+          <button type="button" data-step="2" aria-pressed="false">+6h</button>
+          <button type="button" data-step="3" aria-pressed="false">+12h</button>
+          <button type="button" data-step="4" aria-pressed="false">+24h</button>
+        </div>
+      </div>
+      <div class="lightning-map-wrap">
+        <div id="wind-map" class="wind-map" aria-label="Animated wind map"></div>
+        <span id="wind-map-time" class="lightning-replay-time"></span>
+      </div>
+      <div class="wind-legend" aria-label="Wind speed colors in mph">
+        <span class="wind-legend-title">mph</span>
+          <span class="wind-swatch" data-c="0"></span><span>0</span>
+          <span class="wind-swatch" data-c="1"></span><span>5</span>
+          <span class="wind-swatch" data-c="2"></span><span>10</span>
+          <span class="wind-swatch" data-c="3"></span><span>15</span>
+          <span class="wind-swatch" data-c="4"></span><span>20</span>
+          <span class="wind-swatch" data-c="5"></span><span>30</span>
+          <span class="wind-swatch" data-c="6"></span><span>40+</span>
+      </div>
+      <p id="wind-map-note" class="card-note"></p>
     </section>
 
     <section id="surf" class="card section-card" aria-labelledby="surf-title" aria-busy="true">

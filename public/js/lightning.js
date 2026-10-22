@@ -4,7 +4,7 @@
 // Data: NOAA GOES-19 Geostationary Lightning Mapper via our Netlify Function
 // (/api/lightning, see netlify/functions/lightning.mjs).
 
-import { loadLeaflet } from './radar.js';
+import { loadLeaflet, addBasemap } from './basemap.js';
 
 const API = '/api/lightning';
 const RADIUS_MI = 200;
@@ -12,8 +12,6 @@ const RINGS_MI = [10, 30, 100, 200];
 const REFRESH_MS = 60 * 1000;
 const REPLAY_MS = 10000;
 const METERS_PER_MILE = 1609.344;
-const BASE_URL = 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png';
-const LABELS_URL = 'https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png';
 
 // Age buckets (minutes) -> color. Newest strikes are drawn as bolts.
 export const AGE_BUCKETS = [
@@ -171,12 +169,7 @@ class LightningTracker {
     this.map = L.map('lightning-map', { minZoom: 4, maxZoom: 12, scrollWheelZoom: false, zoomSnap: 0.25 });
     this.map.on('focus', () => this.map.scrollWheelZoom.enable());
     this.map.on('blur', () => this.map.scrollWheelZoom.disable());
-    this.map.createPane('labels');
-    this.map.getPane('labels').style.zIndex = 640;
-    this.map.getPane('labels').style.pointerEvents = 'none';
-    const carto = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>';
-    L.tileLayer(BASE_URL, { subdomains: 'abcd', maxZoom: 19, attribution: carto }).addTo(this.map);
-    L.tileLayer(LABELS_URL, { subdomains: 'abcd', maxZoom: 19, pane: 'labels' }).addTo(this.map);
+    addBasemap(this.map, { style: 'night' });
     this.map.attributionControl.addAttribution('Lightning: NOAA GOES-19 GLM');
 
     this.rings = L.layerGroup().addTo(this.map);

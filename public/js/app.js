@@ -4,6 +4,8 @@ import { initAuth } from './auth.js';
 import { initRadar, setRadarLocation } from './radar.js';
 import { initSurf, setSurfUnits } from './surf.js';
 import { initLightning, setLightningLocation } from './lightning.js';
+import { renderConditions, loadAirQuality } from './conditions.js';
+import { initWindMap, setWindMapLocation } from './windmap.js';
 
 const FORECAST_URL = 'https://api.open-meteo.com/v1/forecast';
 const GEOCODE_URL = 'https://geocoding-api.open-meteo.com/v1/search';
@@ -161,11 +163,16 @@ function forecastUrl({ latitude, longitude }, units) {
     current: [
       'temperature_2m', 'relative_humidity_2m', 'apparent_temperature', 'is_day', 'precipitation',
       'weather_code', 'cloud_cover', 'pressure_msl', 'wind_speed_10m', 'wind_direction_10m', 'wind_gusts_10m',
+      'dew_point_2m',
     ].join(','),
-    hourly: 'temperature_2m,precipitation_probability,weather_code,is_day',
+    hourly: [
+      'temperature_2m', 'precipitation_probability', 'weather_code', 'is_day', 'precipitation',
+      'relative_humidity_2m', 'dew_point_2m', 'wind_speed_10m', 'wind_direction_10m', 'wind_gusts_10m',
+    ].join(','),
     daily: [
       'weather_code', 'temperature_2m_max', 'temperature_2m_min', 'sunrise', 'sunset', 'uv_index_max',
       'precipitation_probability_max', 'precipitation_sum', 'wind_speed_10m_max',
+      'daylight_duration', 'precipitation_hours', 'wind_gusts_10m_max', 'wind_direction_10m_dominant',
     ].join(','),
     temperature_unit: u.temperature_unit,
     wind_speed_unit: u.wind_speed_unit,
@@ -180,6 +187,7 @@ async function loadWeather() {
   const id = ++state.requestId;
   const { location, units } = state;
   renderLocation(location);
+  loadAirQuality(location);
   $('weather').setAttribute('aria-busy', 'true');
   setStatus('Loading forecast…');
   try {
@@ -188,6 +196,7 @@ async function loadWeather() {
     render(data, units);
     setRadarLocation(location, data.timezone);
     setLightningLocation(location);
+    setWindMapLocation(location);
     setStatus('');
   } catch (err) {
     if (id !== state.requestId) return;
@@ -231,6 +240,8 @@ function render(data, units) {
     `H ${round(daily.temperature_2m_max[0])}°  ·  L ${round(daily.temperature_2m_min[0])}°  ·  Feels like ${round(current.apparent_temperature)}°`;
   $('updated').textContent = `Updated ${fmtClock(current.time)} ${data.timezone_abbreviation || ''}`.trim();
   $('summary').textContent = summarize(data, u);
+
+  renderConditions(data, units, u);
 
   // Details
   const pressure = units === 'imperial'
@@ -487,6 +498,7 @@ loadWeather();
 initAuth().catch((err) => console.error('Sign-in setup failed', err));
 initRadar(state.location);
 initLightning(state.location);
+initWindMap(state.location);
 initSurf(state.units);
 
 // Refresh every 15 minutes while the tab is open and visible.

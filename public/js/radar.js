@@ -2,11 +2,13 @@
 // Radar: NEXRAD high-resolution base reflectivity mosaic (N0Q, downscaled from
 // super-res N0B) from the Iowa Environmental Mesonet tile service. Archived
 // frames are available every 5 minutes: ridge::USCOMP-N0Q-YYYYMMDDHHMI (UTC).
-// Basemap: CARTO dark (OpenStreetMap data). Leaflet is loaded on demand.
+// Basemap: our own (js/basemap.js, Natural Earth data). Leaflet is loaded on demand.
+
+import { loadLeaflet, addBasemap } from './basemap.js';
+
+export { loadLeaflet };
 
 const TILE_URL = 'https://mesonet.agron.iastate.edu/c/tile.py/1.0.0/ridge::USCOMP-N0Q-{stamp}/{z}/{x}/{y}.png';
-const BASE_URL = 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png';
-const LABELS_URL = 'https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png';
 
 const HOURS = 12;
 const STEP_MIN = 15;
@@ -18,26 +20,6 @@ const PRELOAD_AHEAD = 4;    // frames kept loading ahead of the one on screen
 const CONUS = { south: 23, north: 50.5, west: -126, east: -65 };
 
 const $ = (id) => document.getElementById(id);
-
-function loadAsset(tag, attrs) {
-  return new Promise((resolve, reject) => {
-    const node = document.createElement(tag);
-    Object.assign(node, attrs);
-    node.onload = resolve;
-    node.onerror = () => reject(new Error(`Failed to load ${attrs.src || attrs.href}`));
-    document.head.append(node);
-  });
-}
-
-let leafletPromise;
-export function loadLeaflet() {
-  if (window.L) return Promise.resolve(window.L);
-  leafletPromise ||= Promise.all([
-    loadAsset('link', { rel: 'stylesheet', href: '/vendor/leaflet-1.9.4/leaflet.css' }),
-    loadAsset('script', { src: '/vendor/leaflet-1.9.4/leaflet.js' }),
-  ]).then(() => window.L);
-  return leafletPromise;
-}
 
 // UTC stamp like 202610221705 for a time that is a multiple of 5 minutes.
 const stamp = (t) => new Date(t).toISOString().replace(/[-:T]/g, '').slice(0, 12);
@@ -78,13 +60,8 @@ class RadarLoop {
     this.map.on('focus', () => this.map.scrollWheelZoom.enable());
     this.map.on('blur', () => this.map.scrollWheelZoom.disable());
 
-    this.map.createPane('labels');
-    this.map.getPane('labels').style.zIndex = 650;
-    this.map.getPane('labels').style.pointerEvents = 'none';
 
-    const carto = '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>';
-    L.tileLayer(BASE_URL, { subdomains: 'abcd', maxZoom: 19, attribution: carto }).addTo(this.map);
-    L.tileLayer(LABELS_URL, { subdomains: 'abcd', maxZoom: 19, pane: 'labels' }).addTo(this.map);
+    addBasemap(this.map, { style: 'day' });
     this.map.attributionControl.addAttribution('Radar &copy; <a href="https://mesonet.agron.iastate.edu/" target="_blank" rel="noopener">Iowa Environmental Mesonet</a> / NWS NEXRAD');
 
     this.marker = L.circleMarker([0, 0], { radius: 7, color: '#ffffff', weight: 2.5, fillColor: '#cc0000', fillOpacity: 1 });

@@ -5,6 +5,13 @@ A weather app branded for Florida Atlantic University. It opens on **FAU's Boca 
 ## Features
 
 - **Animated sky visualizer** behind the main card that matches the live weather: falling rain with splashes, drizzle, thunderstorms with lightning, snow, sleet, drifting fog, moving clouds, a glowing sun by day, and a moon and twinkling stars at night. A picker lets you preview every effect. It pauses when off-screen and shows a still frame for users who prefer reduced motion.
+- **Our own map:** the radar, lightning and wind maps are drawn from bundled Natural Earth data: land, lakes, borders, highways and city labels, with no map provider or API key. A **Map / Streets** switch adds OpenStreetMap street detail when you want it.
+- **Air quality bar:** US AQI on the EPA color scale with a marker, the health category and advice, PM2.5, PM10, ozone and NO₂ readings, the main pollutant, and today's peak.
+- **Wind compass:** a live compass arrow with speed, gusts, direction (from and toward), the Beaufort description, today's high, and a 12-hour wind strip.
+- **Wind map:** animated wind flow (particles colored by speed) about 250 miles around you, with direction arrows and mph labels, for now and +3/+6/+12/+24 hours.
+- **Sunrise & sunset:** the sun's position on a daylight arc, sunrise and sunset times, day length (and tomorrow's change), and golden hour.
+- **Precipitation:** today's amount and chance, the current rate, the 7-day total, the next likely rain, and an hourly chance-of-rain chart.
+- **Humidity:** relative humidity, dew point, a comfort level (comfortable to oppressive), and a 24-hour humidity chart.
 - **12-hour HD radar:** an animated loop of the NEXRAD high-resolution reflectivity mosaic, one frame every 15 minutes, on a dark map. It has play/pause, step and scrub controls and a legend. It follows the searched city and only loads when you scroll to it.
 - **Lightning tracker** (modeled on WeatherBug's Spark): every lightning flash from the last 30 minutes within 200 miles, plotted from NOAA's GOES-19 satellite and refreshed every minute. Strikes are colored by age, with fresh ones drawn as glowing bolts. The map has 10/30/100/200-mile range rings, a nearest-strike safety status ("Lightning within 10 miles: get indoors now"), strike counts by distance and time, and a 30-minute replay.
 - **Surf report** for 9 South Florida spots, defaulting to Boca Raton Inlet. It shows estimated surf size and a rating (Flat to Epic), swell, wind (onshore or offshore for that beach), water temperature, next high and low tide, a 48-hour wave chart and a tide curve (both with hover tooltips and a table view), the best surf window today, and live NWS alerts such as rip current statements.
@@ -37,6 +44,11 @@ public/
   js/radar.js         12-hour radar loop (Leaflet + IEM NEXRAD tiles)
   js/surf.js          Surf report, wave/tide charts, NWS beach alerts
   js/lightning.js     Lightning tracker map, rings, safety status, replay
+  js/basemap.js       Our own Leaflet basemap (Natural Earth) + optional OSM Streets
+  js/windmap.js       Animated wind map from an Open-Meteo multi-point grid
+  js/conditions.js    Air quality, wind compass, sun, precipitation, humidity cards
+  js/charts.js        Small SVG bar/line chart helpers with tooltips and table view
+  data/basemap-na.json  Map geometry (Natural Earth, simplified; see data/README.md)
   js/config.js        Supabase URL + publishable key (fill these in)
   vendor/             Bundled supabase-js 2.118.0 and Leaflet 1.9.4 (both open source), so no CDN is needed
   assets/fau-logo.svg Logo shown in the header
@@ -123,7 +135,8 @@ Supabase doesn't have Yahoo built in, so it's added as a custom OpenID Connect p
 
 - **Weather and marine data:** [Open-Meteo.com](https://open-meteo.com/), licensed under CC BY 4.0. Marine tides are model estimates at about 8 km resolution and aren't for navigation.
 - **Radar:** NWS NEXRAD mosaic tiles from the [Iowa Environmental Mesonet](https://mesonet.agron.iastate.edu/ogc/) (`ridge::USCOMP-N0Q-YYYYMMDDHHMI`, archived every 5 minutes, UTC).
-- **Map:** © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors, © [CARTO](https://carto.com/attributions). CARTO's free basemaps are meant for light, non-commercial use, so switch to a paid or self-hosted basemap if the site gets heavy traffic.
+- **Map:** our own basemap built from [Natural Earth](https://www.naturalearthdata.com/) (public domain). The optional Streets view uses © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors' tiles, which are meant for light use under the [OSM tile policy](https://operations.osmfoundation.org/policies/tiles/).
+- **Air quality:** [Open-Meteo Air Quality API](https://open-meteo.com/en/docs/air-quality-api) (CAMS model; US AQI).
 - **Lightning:** NOAA GOES-19 Geostationary Lightning Mapper (GLM) Level 2 data from the public [NOAA Open Data bucket on AWS](https://registry.opendata.aws/noaa-goes/) (public domain). GLM detects total lightning at about 8 km resolution, updated every 20 seconds.
 - **Beach and marine alerts:** [National Weather Service API](https://www.weather.gov/documentation/services-web-api).
 - **Beach cams:** each is owned and run by the provider named on its card. The app only links to them.
