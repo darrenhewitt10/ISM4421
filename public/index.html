@@ -76,6 +76,13 @@
       </div>
     </section>
 
+    <nav class="section-nav" aria-label="Page sections">
+      <a href="#weather">Forecast</a>
+      <a href="#radar">Radar</a>
+      <a href="#surf">Surf report</a>
+      <a href="#cams">Beach cams</a>
+    </nav>
+
     <div id="status" class="status" role="status" aria-live="polite"></div>
 
     <div id="weather" class="weather" aria-busy="true">
@@ -132,6 +139,150 @@
         <ol id="daily" class="daily"></ol>
       </section>
     </div>
+
+    <section id="radar" class="card section-card" aria-labelledby="radar-title">
+      <div class="card-head">
+        <div>
+          <h2 id="radar-title" class="section-title">12-hour radar</h2>
+          <p class="card-meta">NEXRAD high-resolution mosaic, one frame every 15 minutes</p>
+        </div>
+        <button type="button" id="radar-latest" class="btn btn-outline btn-small-outline">Latest</button>
+      </div>
+      <div id="radar-map" class="radar-map" aria-label="Radar map"></div>
+      <div class="radar-controls">
+        <button type="button" id="radar-prev" class="icon-btn" aria-label="Previous frame">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5v14M19 5l-10 7 10 7z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" id="radar-play" class="icon-btn icon-btn-primary" aria-label="Play radar loop">
+          <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg>
+          <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/></svg>
+        </button>
+        <button type="button" id="radar-next" class="icon-btn" aria-label="Next frame">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 5v14M5 5l10 7-10 7z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        </button>
+        <input id="radar-slider" class="radar-slider" type="range" min="0" max="48" step="1" value="48" aria-label="Radar frame time">
+        <output id="radar-time" class="radar-time" for="radar-slider">Loading…</output>
+      </div>
+      <div class="radar-legend" aria-label="Radar reflectivity legend">
+        <span>Light</span>
+        <span class="radar-legend-bar" aria-hidden="true"></span>
+        <span>Heavy</span>
+        <span class="radar-legend-hail">Hail</span>
+      </div>
+      <p id="radar-note" class="card-note"></p>
+    </section>
+
+    <section id="surf" class="card section-card" aria-labelledby="surf-title" aria-busy="true">
+      <div class="card-head">
+        <div>
+          <h2 id="surf-title" class="section-title">Surf report</h2>
+          <p class="card-meta">South Florida beaches &middot; waves, wind, water &amp; tides</p>
+        </div>
+        <label class="spot-picker">
+          <span class="visually-hidden">Surf spot</span>
+          <select id="surf-spot"></select>
+        </label>
+      </div>
+      <div id="surf-status" class="status" role="status" aria-live="polite"></div>
+      <div id="surf-alerts" class="surf-alerts" aria-live="polite"></div>
+
+      <div class="surf-grid">
+        <div class="surf-now">
+          <p id="surf-rating" class="surf-rating"><span class="surf-rating-dot" aria-hidden="true"></span><span id="surf-rating-text">--</span></p>
+          <p class="surf-height"><span id="surf-height">--</span><span id="surf-height-unit" class="surf-unit">ft</span></p>
+          <p id="surf-size" class="surf-size"></p>
+          <p id="surf-best" class="surf-best"></p>
+        </div>
+        <dl id="surf-details" class="details surf-details"></dl>
+      </div>
+
+      <h3 class="sub-title">Wave height, next 48 hours</h3>
+      <div id="surf-chart" class="chart-box"></div>
+
+      <h3 class="sub-title">Tide</h3>
+      <div id="tide-chart" class="chart-box"></div>
+
+      <p class="card-note">
+        Model estimates from the Open-Meteo Marine API. Tides are computed at roughly 8&nbsp;km resolution and
+        aren&rsquo;t suitable for navigation. Surf size is estimated from wave height and period. Rip currents can be
+        deadly: swim near a lifeguard and check the beach flags.
+      </p>
+    </section>
+
+    <section id="cams" class="card section-card" aria-labelledby="cams-title">
+      <div class="card-head">
+        <div>
+          <h2 id="cams-title" class="section-title">Local beach cams</h2>
+          <p class="card-meta">Free public cams, nearest to FAU first. Each opens on its provider&rsquo;s site.</p>
+        </div>
+      </div>
+      <ul class="cam-grid">
+        <li>
+          <a class="cam-card" href="https://discover.pbc.gov/erm/Pages/Beach-Cams.aspx" target="_blank" rel="noopener noreferrer">
+            <span class="cam-top"><span class="cam-live"><span class="cam-dot" aria-hidden="true"></span>Live cam</span><span class="cam-dist">3.3 mi from FAU</span></span>
+            <strong class="cam-name">Boca Raton Inlet &amp; South Beach Park</strong>
+            <span class="cam-provider">Palm Beach County &amp; City of Boca Raton</span>
+            <span class="cam-desc">Official county inlet cams. The same page also has Boynton, Lake Worth and Jupiter inlets.</span>
+            <span class="cam-open">Open live view <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden"> (opens in a new tab)</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="cam-card" href="https://www.floridarambler.com/web-camera/deerfield-beach-webcam-and-weather/" target="_blank" rel="noopener noreferrer">
+            <span class="cam-top"><span class="cam-live"><span class="cam-dot" aria-hidden="true"></span>Live cam</span><span class="cam-dist">4.4 mi from FAU</span></span>
+            <strong class="cam-name">Deerfield Beach Pier</strong>
+            <span class="cam-provider">City of Deerfield Beach (via Florida Rambler)</span>
+            <span class="cam-desc">The city&rsquo;s beach cam looks south from the fishing pier over the main beach.</span>
+            <span class="cam-open">Open live view <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden"> (opens in a new tab)</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="cam-card" href="https://www.earthcam.com/usa/florida/hillsboro/" target="_blank" rel="noopener noreferrer">
+            <span class="cam-top"><span class="cam-live"><span class="cam-dot" aria-hidden="true"></span>Live cam</span><span class="cam-dist">8.1 mi from FAU</span></span>
+            <strong class="cam-name">Hillsboro Inlet Lighthouse</strong>
+            <span class="cam-provider">EarthCam &amp; Hillsboro Lighthouse Preservation Society</span>
+            <span class="cam-desc">Live view of the lighthouse, Hillsboro Bay and the inlet to the Atlantic.</span>
+            <span class="cam-open">Open live view <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden"> (opens in a new tab)</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="cam-card" href="https://pompanobeachfl.gov/webcams" target="_blank" rel="noopener noreferrer">
+            <span class="cam-top"><span class="cam-live"><span class="cam-dot" aria-hidden="true"></span>Live cam</span><span class="cam-dist">9.8 mi from FAU</span></span>
+            <strong class="cam-name">Pompano Beach</strong>
+            <span class="cam-provider">City of Pompano Beach</span>
+            <span class="cam-desc">City beach and Hillsboro Inlet cams, plus an HD underwater cam below the Fisher Family Pier (daylight hours).</span>
+            <span class="cam-open">Open live view <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden"> (opens in a new tab)</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="cam-card" href="https://www.wptv.com/weather/weather-cams" target="_blank" rel="noopener noreferrer">
+            <span class="cam-top"><span class="cam-live cam-still">Snapshots</span><span class="cam-dist">28 mi from FAU</span></span>
+            <strong class="cam-name">Lake Worth Inlet &amp; more</strong>
+            <span class="cam-provider">WPTV NewsChannel 5</span>
+            <span class="cam-desc">Weather cams around Palm Beach County. Still images refresh about every 15 minutes.</span>
+            <span class="cam-open">Open live view <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden"> (opens in a new tab)</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="cam-card" href="https://marinelife.org/juno-beach-pier-cam/" target="_blank" rel="noopener noreferrer">
+            <span class="cam-top"><span class="cam-live"><span class="cam-dot" aria-hidden="true"></span>Live cam</span><span class="cam-dist">36 mi from FAU</span></span>
+            <strong class="cam-name">Juno Beach Pier</strong>
+            <span class="cam-provider">Loggerhead Marinelife Center</span>
+            <span class="cam-desc">Pier cam from the sea turtle hospital that runs the Juno Beach Pier.</span>
+            <span class="cam-open">Open live view <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden"> (opens in a new tab)</span></span>
+          </a>
+        </li>
+        <li>
+          <a class="cam-card" href="https://jupiter.fl.us/livecams" target="_blank" rel="noopener noreferrer">
+            <span class="cam-top"><span class="cam-live"><span class="cam-dot" aria-hidden="true"></span>Live cam</span><span class="cam-dist">39 mi from FAU</span></span>
+            <strong class="cam-name">Jupiter Inlet</strong>
+            <span class="cam-provider">Town of Jupiter &amp; Jupiter Inlet District</span>
+            <span class="cam-desc">Live stream and inlet cam from the Jupiter Inlet south jetty.</span>
+            <span class="cam-open">Open live view <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="visually-hidden"> (opens in a new tab)</span></span>
+          </a>
+        </li>
+      </ul>
+      <p class="card-note">Cams are run by the organizations listed and can go offline without notice. FAU Owl Weather isn&rsquo;t affiliated with them.</p>
+    </section>
   </main>
 
   <dialog id="signin-dialog" class="signin-dialog" aria-labelledby="signin-title">

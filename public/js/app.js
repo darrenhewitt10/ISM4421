@@ -1,6 +1,8 @@
 import { describe, icon, intensity, kind } from './weather-codes.js';
 import { SkyVisualizer } from './visualizer.js';
 import { initAuth } from './auth.js';
+import { initRadar, setRadarLocation } from './radar.js';
+import { initSurf, setSurfUnits } from './surf.js';
 
 const FORECAST_URL = 'https://api.open-meteo.com/v1/forecast';
 const GEOCODE_URL = 'https://geocoding-api.open-meteo.com/v1/search';
@@ -183,6 +185,7 @@ async function loadWeather() {
     const data = await fetchJSON(forecastUrl(location, units));
     if (id !== state.requestId) return; // a newer request superseded this one
     render(data, units);
+    setRadarLocation(location, data.timezone);
     setStatus('');
   } catch (err) {
     if (id !== state.requestId) return;
@@ -431,6 +434,7 @@ function setupControls() {
   unitButtons.forEach((btn) => btn.addEventListener('click', () => {
     if (btn.dataset.units === state.units) return;
     state.units = btn.dataset.units;
+    setSurfUnits(state.units);
     syncUnits();
     savePrefs();
     loadWeather();
@@ -479,6 +483,8 @@ setupControls();
 setupSearch();
 loadWeather();
 initAuth().catch((err) => console.error('Sign-in setup failed', err));
+initRadar(state.location);
+initSurf(state.units);
 
 // Refresh every 15 minutes while the tab is open and visible.
 setInterval(() => { if (document.visibilityState === 'visible') loadWeather(); }, 15 * 60 * 1000);

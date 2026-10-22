@@ -11,7 +11,7 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "geolocation=(self), camera=(), microphone=()"
-    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.googleusercontent.com https://*.yimg.com; connect-src 'self' https://api.open-meteo.com https://geocoding-api.open-meteo.com https://zneotlgffuedbiqstzcw.supabase.co wss://zneotlgffuedbiqstzcw.supabase.co; manifest-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.googleusercontent.com https://*.yimg.com https://mesonet.agron.iastate.edu https://*.basemaps.cartocdn.com; connect-src 'self' https://api.open-meteo.com https://geocoding-api.open-meteo.com https://marine-api.open-meteo.com https://api.weather.gov https://zneotlgffuedbiqstzcw.supabase.co wss://zneotlgffuedbiqstzcw.supabase.co; manifest-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
 
 [[headers]]
   for = "/manifest.webmanifest"

@@ -5,6 +5,9 @@ A weather app branded for Florida Atlantic University. It opens on **FAU's Boca 
 ## Features
 
 - **Animated sky visualizer** behind the main card that matches the live weather: falling rain with splashes, drizzle, thunderstorms with lightning, snow, sleet, drifting fog, moving clouds, a glowing sun by day, and a moon and twinkling stars at night. A picker lets you preview every effect. It pauses when off-screen and shows a still frame for users who prefer reduced motion.
+- **12-hour HD radar:** an animated loop of the NEXRAD high-resolution reflectivity mosaic, one frame every 15 minutes, on a dark map. It has play/pause, step and scrub controls and a legend. It follows the searched city and only loads when you scroll to it.
+- **Surf report** for 9 South Florida spots, defaulting to Boca Raton Inlet. It shows estimated surf size and a rating (Flat to Epic), swell, wind (onshore or offshore for that beach), water temperature, next high and low tide, a 48-hour wave chart and a tide curve (both with hover tooltips and a table view), the best surf window today, and live NWS alerts such as rip current statements.
+- **Local beach cams:** links to free public cams from Palm Beach County, the cities of Boca Raton, Deerfield Beach and Pompano Beach, EarthCam, WPTV, Loggerhead Marinelife Center and the Town of Jupiter, nearest to FAU first.
 - Current conditions: temperature, feels-like, humidity, wind and gusts, UV, cloud cover, pressure, sunrise and sunset
 - A short plain-English summary ("Rain is likely today… grab an umbrella")
 - Hourly forecast for the next 24 hours and a 7-day forecast with temperature range bars
@@ -27,8 +30,10 @@ public/
   js/weather-codes.js WMO weather codes → descriptions, SVG icons, intensity
   js/visualizer.js    Canvas animation for the sky visualizer
   js/auth.js          Sign in / sign out with Supabase Auth
+  js/radar.js         12-hour radar loop (Leaflet + IEM NEXRAD tiles)
+  js/surf.js          Surf report, wave/tide charts, NWS beach alerts
   js/config.js        Supabase URL + publishable key (fill these in)
-  vendor/             Bundled supabase-js 2.118.0 (MIT), so no CDN is needed
+  vendor/             Bundled supabase-js 2.118.0 and Leaflet 1.9.4 (both open source), so no CDN is needed
   assets/fau-logo.svg Logo shown in the header
   favicon.svg, manifest.webmanifest
 ```
@@ -110,4 +115,8 @@ Supabase doesn't have Yahoo built in, so it's added as a custom OpenID Connect p
 
 ## Credits
 
-Weather data by [Open-Meteo.com](https://open-meteo.com/), licensed under CC BY 4.0.
+- **Weather and marine data:** [Open-Meteo.com](https://open-meteo.com/), licensed under CC BY 4.0. Marine tides are model estimates at about 8 km resolution and aren't for navigation.
+- **Radar:** NWS NEXRAD mosaic tiles from the [Iowa Environmental Mesonet](https://mesonet.agron.iastate.edu/ogc/) (`ridge::USCOMP-N0Q-YYYYMMDDHHMI`, archived every 5 minutes, UTC).
+- **Map:** © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors, © [CARTO](https://carto.com/attributions). CARTO's free basemaps are meant for light, non-commercial use, so switch to a paid or self-hosted basemap if the site gets heavy traffic.
+- **Beach and marine alerts:** [National Weather Service API](https://www.weather.gov/documentation/services-web-api).
+- **Beach cams:** each is owned and run by the provider named on its card. The app only links to them.
